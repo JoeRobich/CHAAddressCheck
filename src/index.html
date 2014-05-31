@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title></title>
+        <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css" />
+        <link rel="stylesheet" href="css/main.css" />
+
+        <script src="http://js.arcgis.com/3.9/"></script>
+        <script>
+            require({
+                packages: [{
+                    name: "js",
+                    location: location.pathname.replace(/\/[^/]+$/, "") + "/js"
+                }]
+            }, ["js", "dojo/domReady!"], function (demo) {
+                console.log("demo started");
+            });
+        </script>
+    </head>
+    <body>
+        <input id="address" type="text" /> <input id="checkAddress" type="button" value="Check" />
+        <div id="map"></div>
+    </body>
+</html>
