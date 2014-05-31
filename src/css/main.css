@@ -5,6 +5,16 @@
     padding: 0;
 }
 
+#header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+}
+
 #address {
-    width : 80%;
+    width: 80%;
+    font-size: 1.5em;
 }

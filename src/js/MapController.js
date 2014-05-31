@@ -1,6 +1,6 @@
 ﻿/// <reference path="./esri.d.ts"/>
 /// <reference path="./dojo.d.ts"/>
-define(["require", "exports", "esri/map", "esri/SpatialReference", "esri/geometry/Point", "esri/geometry/Polygon", "esri/request", "esri/layers/GraphicsLayer", "esri/graphic", "esri/Color", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol", "esri/symbols/SimpleFillSymbol", "esri/tasks/GeometryService", "esri/tasks/locator", "esri/tasks/ProjectParameters", "dojo/Deferred"], function(require, exports, Map, SpatialReference, Point, Polygon, esriRequest, GraphicsLayer, Graphic, Color, SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol, GeometryService, Locator, ProjectParameters, Deferred) {
+define(["require", "exports", "esri/map", "esri/SpatialReference", "esri/geometry/Point", "esri/geometry/Polygon", "esri/request", "esri/layers/GraphicsLayer", "esri/graphic", "esri/Color", "esri/symbols/Font", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol", "esri/symbols/SimpleFillSymbol", "esri/symbols/TextSymbol", "esri/tasks/GeometryService", "esri/tasks/locator", "esri/tasks/ProjectParameters", "dojo/Deferred"], function(require, exports, Map, SpatialReference, Point, Polygon, esriRequest, GraphicsLayer, Graphic, Color, Font, SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol, TextSymbol, GeometryService, Locator, ProjectParameters, Deferred) {
     
 
     var MapController = (function () {
@@ -65,8 +65,24 @@ define(["require", "exports", "esri/map", "esri/SpatialReference", "esri/geometr
             self.addressLayer.clear();
 
             self.queryWithHamilton(address, deferred, self);
+            deferred.promise.then(function (isWithin) {
+                var text = isWithin ? "Within" : "Not Within";
+                var font = new Font("24pt", Font.STYLE_NORMAL, Font.VARIANT_NORMAL, Font.WEIGHT_BOLD, "sans-serif");
+                var textSymbol = new TextSymbol(text, font, Color.fromHex("#000"));
+                textSymbol.horizontalAlignment = TextSymbol.ALIGN_MIDDLE;
+                textSymbol.setOffset(0, 13);
 
-            return deferred.promise;
+                self.addressLayer.add(new Graphic(self.addressLocation, textSymbol));
+
+                var color = isWithin ? "#00ff00" : "#ff0000";
+                var outline = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, Color.fromHex(color), 2);
+                var addressSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_DIAMOND, 16, outline, Color.fromHex(color));
+
+                var addressGraphic = new Graphic(self.addressLocation, addressSymbol);
+                self.addressLayer.add(addressGraphic);
+
+                self.map.centerAndZoom(self.addressLocation, 20);
+            });
         };
 
         MapController.prototype.queryWithHamilton = function (address, deferred, self) {
@@ -82,17 +98,9 @@ define(["require", "exports", "esri/map", "esri/SpatialReference", "esri/geometr
                 params.geometries = [candidate.location];
                 params.outSR = self.wgs84;
                 self.geometryService.project(params, function (locations) {
-                    var location = locations[0];
+                    self.addressLocation = locations[0];
 
-                    var outline = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, Color.fromHex("#ff0000"), 2);
-                    var addressSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_DIAMOND, 16, outline, Color.fromHex("#ff0000"));
-
-                    var addressGraphic = new Graphic(location, addressSymbol);
-                    self.addressLayer.add(addressGraphic);
-
-                    self.map.centerAndZoom(location, 20);
-
-                    self.geometryService.intersect([location], self.cityPolygon, function (result) {
+                    self.geometryService.intersect([self.addressLocation], self.cityPolygon, function (result) {
                         deferred.resolve(!isNaN(result[0].x));
                     });
                 });
@@ -112,15 +120,7 @@ define(["require", "exports", "esri/map", "esri/SpatialReference", "esri/geometr
                 params.geometries = [candidate.location];
                 params.outSR = self.wgs84;
                 self.geometryService.project(params, function (locations) {
-                    var location = locations[0];
-
-                    var outline = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, Color.fromHex("#ff0000"), 2);
-                    var addressSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_DIAMOND, 16, outline, Color.fromHex("#ff0000"));
-
-                    var addressGraphic = new Graphic(location, addressSymbol);
-                    self.addressLayer.add(addressGraphic);
-
-                    self.map.centerAndZoom(location, 20);
+                    self.addressLocation = locations[0];
 
                     deferred.resolve(false);
                 });

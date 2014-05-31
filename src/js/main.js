@@ -3,15 +3,12 @@
     mapController.start();
 
     var address = document.getElementById("address");
-    var checkAddress = document.getElementById("checkAddress");
 
-    checkAddress.onclick = function (evt) {
-        mapController.checkAddress(address.value).then(function (within) {
-            if (within)
-                alert("Within");
-            else
-                alert("Not within");
-        });
+    address.onkeypress = function (evt) {
+        if (evt.keyCode != 13)
+            return;
+
+        mapController.checkAddress(address.value);
     };
 });
 //# sourceMappingURL=main.js.map
