@@ -19,15 +19,18 @@
   <ItemGroup>
     <Content Include="css\main.css" />
     <Content Include="index.html" />
+    <Content Include="js\OpenLayers.js" />
+    <Content Include="js\Q.js" />
+    <Content Include="js\require.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="js\dojo.d.ts" />
-    <TypeScriptCompile Include="js\dojo.types.d.ts" />
+    <TypeScriptCompile Include="js\esri.ts" />
     <TypeScriptCompile Include="js\MapController.ts" />
-    <TypeScriptCompile Include="js\esri.d.ts" />
     <TypeScriptCompile Include="js\main.ts" />
     <TypeScriptCompile Include="js\HashController.ts" />
+    <TypeScriptCompile Include="js\openlayers.d.ts" />
+    <TypeScriptCompile Include="js\Q.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="geo\chattanooga.geojson" />
@@ -70,7 +73,7 @@
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
-    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptModuleKind>amd</TypeScriptModuleKind>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

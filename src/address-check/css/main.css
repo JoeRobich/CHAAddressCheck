@@ -1,20 +1,326 @@
-﻿html, body, #map {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+﻿/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+html {
+	font-family: sans-serif;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%
 }
 
-#header {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    text-align: center;
-    z-index: 1;
+body {
+	margin: 0
 }
 
-#address {
-    width: 80%;
-    font-size: 1.5em;
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary {
+	display: block
+}
+
+audio,canvas,progress,video {
+	display: inline-block;
+	vertical-align: baseline
+}
+
+audio:not([controls]) {
+	display: none;
+	height: 0
+}
+
+[hidden],template {
+	display: none
+}
+
+a {
+	background: 0 0
+}
+
+a:active,a:hover {
+	outline: 0
+}
+
+abbr[title] {
+	border-bottom: 1px dotted
+}
+
+b,strong {
+	font-weight: 700
+}
+
+dfn {
+	font-style: italic
+}
+
+h1 {
+	font-size: 2em;
+	margin: .67em 0
+}
+
+mark {
+	background: #ff0;
+	color: #000
+}
+
+small {
+	font-size: 80%
+}
+
+sub,sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline
+}
+
+sup {
+	top: -.5em
+}
+
+sub {
+	bottom: -.25em
+}
+
+img {
+	border: 0
+}
+
+svg:not(:root) {
+	overflow: hidden
+}
+
+figure {
+	margin: 1em 40px
+}
+
+hr {
+	box-sizing: content-box;
+	height: 0
+}
+
+pre {
+	overflow: auto
+}
+
+code,kbd,pre,samp {
+	font-family: monospace,monospace;
+	font-size: 1em
+}
+
+button,input,optgroup,select,textarea {
+	color: inherit;
+	font: inherit;
+	margin: 0
+}
+
+button {
+	overflow: visible
+}
+
+button,select {
+	text-transform: none
+}
+
+button,html input[type="button"],input[type="reset"],input[type="submit"] {
+	-webkit-appearance: button;
+	cursor: pointer
+}
+
+button[disabled],html input[disabled] {
+	cursor: default
+}
+
+button::-moz-focus-inner,input::-moz-focus-inner {
+	border: 0;
+	padding: 0
+}
+
+input {
+	line-height: normal
+}
+
+input:focus {
+    outline: none;
+}
+
+input[type="checkbox"],input[type="radio"] {
+	box-sizing: border-box;
+	padding: 0
+}
+
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button {
+	height: auto
+}
+
+input[type="search"] {
+	-webkit-appearance: textfield;
+	box-sizing: content-box
+}
+
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance: none
+}
+
+fieldset {
+	border: 1px solid silver;
+	margin: 0 2px;
+	padding: .35em .625em .75em
+}
+
+legend {
+	border: 0;
+	padding: 0
+}
+
+textarea {
+	overflow: auto
+}
+
+optgroup {
+	font-weight: 700
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0
+}
+
+td,th {
+	padding: 0
+}
+
+@font-face {
+	font-family: 'Chattype-Regular';
+	src: url("../fonts/chattype-regular/chatyperegular-webfont.eot");
+	src: url("../fonts/chattype-regular/chatyperegular-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/chattype-regular/chatyperegular-webfont.woff") format("woff"),url("../fonts/chattype-regular/chatyperegular-webfont.ttf") format("truetype"),url("../fonts/chattype-regular/chatyperegular-webfont.svg#chatyperegular") format("svg");
+	font-weight: 400;
+	font-style: normal
+}
+
+@font-face {
+	font-family: 'Chattype-Bold';
+	src: url("../fonts/chattype-bold/chatypebold-webfont.eot");
+	src: url("../fonts/chattype-bold/chatypebold-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/chattype-bold/chatypebold-webfont.woff") format("woff"),url("../fonts/chattype-bold/chatypebold-webfont.ttf") format("truetype"),url("../fonts/chattype-bold/chatypebold-webfont.svg#chatypebold-webfont") format("svg");
+	font-weight: 400;
+	font-style: normal
+}
+
+body {
+	font-family: 'Chattype-Regular',helvetica,arial,sans-serif;
+	font-size: 16px;
+	line-height: 1.65;
+	color: #3c3c3c
+}
+
+svg text {
+	font-family: 'Chattype-Bold',helvetica,arial,sans-serif;
+	font-size: 2.15em
+}
+
+#graphicsLayer1_layer path {
+	fill: #7627a7;
+	stroke: #7627a7
+}
+
+*,*:before,*:after {
+	box-sizing: border-box
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	-ms-interpolation-mode: bicubic
+}
+
+::-moz-selection {
+	background: #eee;
+	color: #3c3c3c;
+	text-shadow: none
+}
+
+::selection {
+	background: #eee;
+	color: #3c3c3c;
+	text-shadow: none
+}
+
+.nav {
+	position: absolute;
+	width: 100%;
+	padding: 1.25em 0 1.3em;
+	background-color: #fff;
+	background: rgba(255,255,255,.8);
+	border-bottom: 1px solid #6d6d6d;
+	z-index: 1000;
+}
+
+.nav #address {
+	display: block;
+	width: 75%;
+	float: right;
+	margin-right: 5%;
+	padding: .5em 1em;
+	font-size: 1.25em;
+	border: 1px solid #6d6d6d;
+	border-radius: 4px
+}
+
+@media (min-width: 600px) {
+	.nav #address {
+		float:none;
+		margin: auto
+	}
+}
+
+.olControlZoom {
+	position: absolute!important;
+	top: .7em!important;
+	left: 20px!important;
+	color: #3c3c3c!important;
+	border: 1px solid #6d6d6d!important;
+	border-radius: 5px!important;
+	text-align: center!important;
+	padding: 0!important;
+}
+
+.olControlZoom .olControlZoomIn {
+	border-bottom: 1px solid #57585A!important;
+	border-radius: 5px 5px 0 0!important;
+}
+
+.olControlZoom .olControlZoomIn,.olControlZoom .olControlZoomOut {
+	width: 30px!important;
+	height: 30px!important;
+	font-size: 24px!important;
+	font-family: verdana,helvetica!important;
+	font-weight: normal;
+	line-height: 25px!important;
+	color: #6d6d6d!important;
+	background: white!important;
+	margin: 0!important;
+}
+
+.olControlZoom .olControlZoomIn:hover,.olControlZoom .olControlZoomOut:hover {
+	color: #f26522!important;
+	background-color: #f4f4f4!important;
+}
+
+.olControlAttribution {
+    font-size: 13px!important;
+    line-height: 15px!important;
+    color: #666666!important;
+    display: inline-block!important;
+    vertical-align: bottom!important;
+    white-space: nowrap!important;
+    overflow: hidden!important;
+    text-overflow: ellipsis!important;
+    padding: 0 4px!important;
+    margin: 0 5px 0 0!important;
+    background: rgba(255,255,255,0.7)!important;
+    right: 5px!important;
+    bottom: 5px!important;
+    text-align: right!important;
+}
+
+#map {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0
 }

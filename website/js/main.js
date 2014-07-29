@@ -31,4 +31,3 @@
         return checkForAddress();
     });
 });
-//# sourceMappingURL=main.js.map
